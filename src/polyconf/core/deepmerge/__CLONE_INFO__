@@ -1,0 +1,9 @@
+Cloned branch "main" (commit=33a078ac7a29b63dfb91fea806cc6b96ede3fd23)
+On Wed Jun  7 16:46:43 EDT 2023
+From git@github.com:toumorokoshi/deepmerge.git
+
+Docs: https://deepmerge.readthedocs.io/en/latest/
+
+Manual alterations:
+* Stripped metadata (notable, kept license)
+* Striped tests
