@@ -21,6 +21,7 @@ class Status(StrEnum):
     UNKNOWN = auto()
     SKIP = auto()
     RETRY = auto()
+    EMPTY = auto()
 
     def __repr__(self) -> str:
         return f"{self.__class__.__name__}.{self._name_}"
