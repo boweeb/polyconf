@@ -1,3 +1,5 @@
+"""Status module."""
+
 from __future__ import annotations
 
 from dataclasses import dataclass
@@ -7,6 +9,11 @@ from typing import Any
 
 @dataclass
 class Status(StrEnum):
+    """Status.
+
+    Indicatetes the runtime context status
+    """
+
     NEW = auto()
     OK = auto()
     ERROR = auto()
@@ -23,4 +30,5 @@ class Status(StrEnum):
 
 
 def status_new() -> Status:
+    """Factory function for initializing a default Status."""
     return Status.NEW
