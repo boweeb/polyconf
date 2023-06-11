@@ -6,7 +6,7 @@ from dataclasses import dataclass, field
 from typing import Any, Self, Type, TypeVar
 
 from polyconf.core import typing_ as t
-from polyconf.core.deepmerge import always_merger
+from polyconf.core.deepmerge import deep
 
 
 T = TypeVar("T")
@@ -267,7 +267,7 @@ class Datum:
         other_dict = other.serialize()
         # other_dict: dict = other.serialize() if isinstance(other, Datum) else other
 
-        always_merger.merge(self_dict, other_dict)  # type:ignore
+        deep.merge(self_dict, other_dict)  # type:ignore
 
         return self.deserialize(self_dict)
 
@@ -279,7 +279,7 @@ class Datum:
         other_dict = other.serialize()
         # other_dict: dict = other.serialize() if isinstance(other, Datum) else other
 
-        always_merger.merge(other_dict, self_dict)  # type:ignore
+        deep.merge(other_dict, self_dict)  # type:ignore
 
         return self.deserialize(other_dict)
 
