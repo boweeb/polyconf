@@ -6,9 +6,9 @@ license = "MIT"
 authors = ["Jesse Butcher <boweeb@gmail.com>"]
 maintainers = []
 readme = "README.md"
-homepage = "https://github.com/boweeb/polyconf"
+homepage = "https://polyconf.readthedocs.io"
 repository = "git@github.com:boweeb/polyconf.git"
-documentation = "file://./README.md"
+documentation = "https://polyconf.readthedocs.io"
 keywords = ["polyconf", "configuration"]
 classifiers = [
     "Development Status :: 3 - Alpha",
@@ -16,7 +16,7 @@ classifiers = [
     "Programming Language :: Python :: 3",
     "Programming Language :: Python :: 3.11",
 ]
-packages = [{include = "polyconf", from = "src"}]
+packages = [{ include = "polyconf", from = "src" }]
 include = [{ path = "tests", format = "sdist" }]
 
 [tool.poetry.dependencies]
@@ -124,7 +124,10 @@ ignore_errors = true
 
 [tool.pytest.ini_options]
 addopts = [
-    "--import-mode=importlib --strict-config --strict-markers -ra"
+    "--import-mode=importlib",
+    "--strict-config",
+    "--strict-markers",
+    "-ra",
 ]
 xfail_strict = true
 
