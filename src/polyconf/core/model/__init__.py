@@ -24,8 +24,7 @@ Definitions:
         - Note the use of "scalar" is more restrictive and does not imply "datum".
     - collection -- Is specifically constrained to native collection types "set | list | dict".
         - In general, the members/values are "scalars" (as defined above) and/or "datums".
-        - Specific to representing collections as datums,
-          in the case of dict, the keys are explicit and the type implies the collection type.
+        - Specific to representing collections as datums, in the case of dict, the keys are explicit and the type implies the collection type.
             - int key implies a list
             - str key implies a dict
         - Note there currently isn't a case for collections of collections (perhaps called "2nd order collection"?).
@@ -35,12 +34,9 @@ Definitions:
       whether to disk or over the network, but PolyConf's usage is closer to "marshalling" (should I refactor?).
       The target is portability within the application, thus the "de/serialize()" methods produce native Python
       objects and not a (usually JSON) string.
-        - A motivation (perhaps primary) is to ease deep merging between "datums",
-          which is a complex topic/task.
-        - I vendored a library ("deepmerge") that has exhaustive support for deep merging dictionaries.
-          Therefore, the "merge" process serials each side to dictionaries, the deserializes the result.
-        - Currently, the use cases are constrained within PolyConf, but it's easily conceivable that the
-          application using PolyConf could use it, too (thus it's publicly exposed).
+      - A motivation (perhaps primary) is to ease deep merging between "datums", which is a complex topic/task.
+      - I vendored a library ("deepmerge") that has exhaustive support for deep merging dictionaries. Therefore, the "merge" process serials each side to dictionaries, the deserializes the result.
+      - Currently, the use cases are constrained within PolyConf, but it's easily conceivable that the application using PolyConf could use it, too (thus it's publicly exposed).
 
 Maxims:
     - "value" and "children" are mutually exclusive.

@@ -120,8 +120,7 @@ class Datum:
 
         Args:
             name: The child datum name to retrieve.
-            default: The default value to return if the child is not found.
-                Defaults to None.
+            default: The default value to return if the child is not found. Defaults to None.
         """
         return next((child for child in self.children if child.name == name), default)
 
