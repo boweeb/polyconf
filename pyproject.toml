@@ -59,9 +59,12 @@ optional = true
 # polyconf-plugins-http = {path = "../polyconf-plugins-http", develop = true}
 # polyconf-plugins-sql = {path = "../polyconf-plugins-sql", develop = true}
 # polyconf-plugins-xdg = {path = "../polyconf-plugins-xdg", develop = true}
-sphinx = "^7.0.1"
-myst-parser = "^2.0.0"
-furo = "^2023.5.20"
+sphinx = "^6.0"
+myst-parser = "^2.0"
+furo = "^2023.5"
+sphinx-autodoc2 = "^0.4"
+mdit-py-plugins = "^0.4"
+sphinx-book-theme = "^1.0.1"
 
 [tool.black]
 line-length = 120
