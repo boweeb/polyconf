@@ -95,6 +95,9 @@ class Registry:
     def register_plugin(self, name: str, plugin: Plugin) -> None:
         self._active_plugins[name] = plugin
 
+    def resolve(self, context: Context) -> Context:
+        return pipe(context, *self.plugins)
+
 
 class FooPlugin(Plugin):
     name = "foo"
@@ -118,6 +121,7 @@ if __name__ == "__main__":
     registry.register_plugin("bar", BarPlugin(log))
 
     ctx = Context(app_name="widget", given={"a": "b", "c": "d"})
-    result: Context = pipe(ctx, *registry.plugins)
-    log.info(f"{result=}")
+    # result: Context = pipe(ctx, *registry.plugins)
+    result: Context = registry.resolve(ctx)
+    log.info(f"{result.result.as_native_value=}")
     # log.info(f"{result.as_obj=}")
