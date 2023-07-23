@@ -33,38 +33,20 @@ hypothesis = "^6.76"
 
 [tool.poetry.group.lint.dependencies]
 mypy = "^1.3"
-black = "^23.3.0"
-isort = "^5.12.0"
-pylint = "^2.17.4"
+black = "^23.3"
+isort = "^5.12"
+pylint = "^2.17"
 
 [tool.poetry.group.docs]
 optional = true
 
 [tool.poetry.group.docs.dependencies]
-
-
-# [tool.poetry.group.cli-dev]
-# optional = true
-#
-# [tool.poetry.group.cli-dev.dependencies]
-# polyconf-cli = {path = "../polyconf-cli", develop = true}
-#
-# [tool.poetry.group.plugin-dev]
-# optional = true
-#
-# [tool.poetry.group.plugin-dev.dependencies]
-# polyconf-plugins-direnv = {path = "../polyconf-plugins-direnv", develop = true}
-# polyconf-plugins-env = {path = "../polyconf-plugins-env", develop = true}
-# polyconf-plugins-file = {path = "../polyconf-plugins-file", develop = true}
-# polyconf-plugins-http = {path = "../polyconf-plugins-http", develop = true}
-# polyconf-plugins-sql = {path = "../polyconf-plugins-sql", develop = true}
-# polyconf-plugins-xdg = {path = "../polyconf-plugins-xdg", develop = true}
 sphinx = "^6.0"
 myst-parser = "^2.0"
 furo = "^2023.5"
 sphinx-autodoc2 = "^0.4"
 mdit-py-plugins = "^0.4"
-sphinx-book-theme = "^1.0.1"
+sphinx-book-theme = "^1.0"
 
 [tool.black]
 line-length = 120
