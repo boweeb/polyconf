@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "polyconf"
-version = "0.1.0"
+version = "0.2.0"
 description = "Gather and merge configuration from many sources."
 license = "MIT"
 authors = ["Jesse Butcher <boweeb@gmail.com>"]

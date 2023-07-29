@@ -1,4 +1,4 @@
-"""Status module."""
+"""Status"""
 
 from __future__ import annotations
 
@@ -24,7 +24,7 @@ class Status(StrEnum):
     EMPTY = auto()
 
     def __repr__(self) -> str:
-        return f"{self.__class__.__name__}.{self._name_}"
+        return f"{self.__class__.__name__}.{self._name_}"  # pylint: disable=no-member
 
     def __eq__(self, other: Any) -> bool:
         return str(self) == str(other)

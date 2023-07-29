@@ -26,3 +26,5 @@ However, I still want to give credit where it's due because there are a couple l
 and fallback behavior that would have been painful to work out myself.
 It also serves as a reminder for future reference because if I ever reverse the moratorium on 3rd party libs,
 I'll happily depend on `deepmerge` directly.
+
+<!-- github-only -->

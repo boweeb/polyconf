@@ -1,3 +1,5 @@
+"""Context"""
+
 from __future__ import annotations
 
 from dataclasses import dataclass, field
@@ -8,11 +10,14 @@ from .status import Status, status_new
 
 
 def root_datum() -> Datum:
+    """Factory function to create a root datum."""
     return Datum(name="root")
 
 
 @dataclass
 class Context:
+    """PolyConf runtime context"""
+
     app_name: str
     app_prefix: str = ""
     trim_prefix: bool = True
@@ -24,5 +29,4 @@ class Context:
         self.app_prefix = self.app_prefix or self.app_name.upper()
 
         if self.given:
-            # self.result = {k: Datum(k, v, sources={"given"}) for k, v in self.given.items()}
             self.result = Datum.from_dict(data=self.given, source="given")

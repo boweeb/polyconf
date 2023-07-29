@@ -10,9 +10,10 @@ from datetime import date
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
 
 project = "PolyConf"
+# copyright = "2023, Jesse Butcher"
 copyright = f"{date.today().year}, Jesse Butcher"
 author = "Jesse Butcher"
-release = "0.1.0"
+release = "0.2.0"
 
 # -- General configuration ---------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration

@@ -1,4 +1,4 @@
-"""Datum module."""
+"""Datum"""
 
 from __future__ import annotations
 
@@ -39,21 +39,31 @@ class Datum:
 
     @property
     def children_names(self) -> set[t.PrimitiveIndex]:
+        """Name attributes of all children as a set."""
         return {c.name for c in self.children}
 
     @property
     def as_native_value(self) -> t.PrimitiveType:
+        """Native representation of the data value."""
         # NOTE: currently not actively in use, but it seems useful and works well.
         if self.value is not None:
             return self.value
-        elif self.children:
+
+        if self.children:
             if self.looks_like() == list:
                 return [child.as_native_value for child in self.children]
             return {c.name: c.as_native_value for c in self.children}
-        else:
-            return None
+
+        return None
 
     def add_child(self, datum: Datum, merge: bool = False) -> None:
+        """Add a child to the collection.
+
+        Args:
+            datum: The child to add.
+            merge: Whether to merge the existing child with the new one.
+        """
+
         if existing_child := self.get(name=datum.name):
             # When exists, always drop first because "merge" intends to "replace".
             self.remove_child(datum)
@@ -69,13 +79,19 @@ class Datum:
             self.children.add(datum)
 
     def remove_child(self, datum: Datum) -> None:
+        """Remove a child from the collection.
+
+        Args:
+            datum: The child to remove.
+
+        Note:
+            This is more well behaved than:
+                `self.children.discard(datum)`
+                (or `self.children.remove(datum)`)
+            because the native lookup is based on hash, but the desired basis is on name.
+        """
         if found_child := self.get(datum.name):
             self.children.remove(found_child)
-
-        # Note: This is more well behaved than:
-        # self.children.discard(datum)
-        #   (or self.children.remove(datum))
-        # because the native lookup is based on hash, while the desired basis is on name.
 
     def put(
         self,
@@ -84,8 +100,16 @@ class Datum:
         source: str | None = None,
         merge: bool = False,
     ) -> None:
+        """Put a raw value into the collection.
+
+        Args:
+            name: The name of the value.
+            value: The value to store.
+            source: The source of the value.
+            merge: Whether to merge the existing child with the new one.
+        """
         if name not in self.children_names:
-            sources = set() if source is None else {source}
+            sources: set[str] = set() if source is None else {source}
             self.add_child(Datum(name=name, value=value, sources=sources), merge=merge)
             return
 
@@ -96,6 +120,8 @@ class Datum:
                 child_node.sources.add(source)
 
     def traverse(self) -> None:
+        """Traverse the collection."""
+
         nodes_to_visit = [self]
         while nodes_to_visit:
             current_node = nodes_to_visit.pop()
@@ -125,6 +151,8 @@ class Datum:
         return next((child for child in self.children if child.name == name), default)
 
     def eq_helper(self) -> str:
+        """Helper for equality comparison."""
+
         fields = [
             self.name,
             self.value,
@@ -134,16 +162,20 @@ class Datum:
         return "|".join(repr(x) for x in fields)
 
     def looks_like(self) -> Type[str | int | bool | list[Any] | dict[Any, Any]]:
+        """Check if the datum looks like a primitive value."""
+
         if self.value is not None:
             return self.value.__class__
 
-        first_index = list(self.children)[0].name
+        first_index: str | int = list(self.children)[0].name
+
         if isinstance(first_index, int):
-            return list
-        elif isinstance(first_index, str):
-            return dict
-        else:
-            raise TypeError(first_index)
+            return list  # pyright: ignore [reportUnknownVariableType]
+
+        if isinstance(first_index, str):
+            return dict  # pyright: ignore [reportUnknownVariableType]
+
+        raise TypeError(first_index)
 
     @classmethod
     def assimilate(
@@ -154,6 +186,16 @@ class Datum:
         parent: Self,
         merge: bool = False,
     ) -> None:
+        """Assimilate! Naming is hard.
+
+        Args:
+            name: The name of the value.
+            data: The value to store.
+            source: The source of the value.
+            parent: The parent node.
+            merge: Whether to merge the existing child with the new one.
+        """
+
         # Plain scalar value -- no recursion.
         if t.is_primitive_scalar(data) and data is not None:
             parent.put(name=name, value=data, source=source, merge=merge)
@@ -176,6 +218,15 @@ class Datum:
 
     @classmethod
     def from_dict(cls, data: dict[str, Any], source: str = "cls-factory") -> Self:
+        """Create a datum from a dictionary.
+
+        Args:
+            data: The dictionary to convert to a datum. Keys must be strings.
+            source: The source of the datum.
+
+        Returns:
+            The datum created from the dictionary.
+        """
         root = cls(name="root", sources={source})
         for key, value in data.items():
             root.assimilate(name=key, data=value, source=source, parent=root)
@@ -247,6 +298,11 @@ class Datum:
         # return root
 
     def serialize(self) -> t.PrimitiveDict:
+        """Serialize the datum to a dictionary.
+
+        Returns:
+            The serialized datum.
+        """
         data: t.PrimitiveDict = {
             "name": self.name,
         }
@@ -258,13 +314,26 @@ class Datum:
             data["sources"] = list(self.sources)
         return data
 
-    def __or__(self, other: Datum) -> Datum:
+    def __or__(self, other: Any) -> Datum:
+        """Merge this datum with another datum.
+
+        This is achieved by serializing the datums to dictionaries, using deep.merge() to merge those dictionaries,
+        then deserializing the merged dictionary back to a datum.
+
+        Args:
+            other: The datum to merge with.
+
+        Returns:
+            The merged datum.
+
+        Raises:
+            NotImplemented: If the other datum is not a datum.
+        """
         if not isinstance(other, Datum):
             return NotImplemented
 
         self_dict = self.serialize()
         other_dict = other.serialize()
-        # other_dict: dict = other.serialize() if isinstance(other, Datum) else other
 
         deep.merge(self_dict, other_dict)  # type:ignore
 
