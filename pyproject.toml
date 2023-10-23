@@ -7,20 +7,20 @@ authors = ["Jesse Butcher <boweeb@gmail.com>"]
 maintainers = []
 readme = "README.md"
 homepage = "https://polyconf.readthedocs.io"
-repository = "git@github.com:boweeb/polyconf.git"
+repository = "https://github.com/boweeb/polyconf"
 documentation = "https://polyconf.readthedocs.io"
 keywords = ["polyconf", "configuration"]
 classifiers = [
     "Development Status :: 3 - Alpha",
     "Intended Audience :: Developers",
     "Programming Language :: Python :: 3",
-    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
 ]
 packages = [{ include = "polyconf", from = "src" }]
 include = [{ path = "tests", format = "sdist" }]
 
 [tool.poetry.dependencies]
-python = "^3.11"
+python = "^3.12"
 
 [tool.poetry.group.dev.dependencies]
 
@@ -61,7 +61,7 @@ lines_after_imports = 2
 # Specify the target platform details in config, so your developers are
 # free to run mypy on Windows, Linux, or macOS and get consistent
 # results.
-python_version = "3.11"
+python_version = "3.12"
 platform = "linux"
 
 # Magic combination for namespace-package under src/
